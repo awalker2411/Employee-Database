@@ -5,7 +5,7 @@ class Data {
         this.connection = connection
     }
 
-    async viewAllDepartments(){
+    async viewAllDepts(){
         const query = await connection()
         const [ rows, fields ] = await query.execute(`SELECT * FROM department`)
         return rows
@@ -23,11 +23,11 @@ class Data {
         return rows
     }
 
-    async viewAllEmployees(){
+    async viewAllEmp(){
         const query = await connection();
         const [ rows, fields ] = await query.execute(
             `SELECT
-                employee.employee_id, employee.first_name, employee.last_name, role.role_title AS role, dept_name AS department, role.role_salary
+                employee.emp_id, employee.first_name, employee.last_name, role.role_title AS role, dept_name AS department, role.role_salary
             From
                 employee
                 LEFT JOIN role ON employee.emp_role_id = role.role_id
@@ -36,7 +36,7 @@ class Data {
         return rows
     }
 
-    async addDepartment(deptName){
+    async addDeptData(deptName){
         const query = await connection()
         const [ rows, fields ] = await query.execute(
             `INSERT INTO department (dept_name) VALUES (?)`, 
@@ -44,7 +44,7 @@ class Data {
         )
     }
 
-    async addRole(roleTitle, roleSalary, roleDeptID){
+    async addRoleData(roleTitle, roleSalary, roleDeptID){
         const query = await connection()
         const [ rows, fields ] = await query.execute(
             `INSERT INTO role (role_title, role_salary, role_dept_id) VALUES (?, ?, ?)`,
@@ -52,7 +52,7 @@ class Data {
         )
     }
 
-    async addEmployee(firstName, lastName, roleID, managerID){
+    async addEmpData(firstName, lastName, roleID, managerID){
         const query = await connection()
         const [ rows, fields ] = await query.execute(
             `INSERT INTO employee (first_name, last_name, emp_role_id, manager_id) VALUES (?, ?, ?, ?)`,
